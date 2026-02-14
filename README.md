@@ -29,6 +29,7 @@ cp .env.example .env.local
 3. Set required variables in `.env.local`:
 - `CRON_SECRET` (required)
 - `NEXT_PUBLIC_SITE_URL` (required)
+- `PUBLISH_TARGET=filesystem` (recommended locally)
 - `OPENAI_API_KEY` (optional, enables LLM writing)
 - `OPENAI_MODEL` (optional)
 4. Run development server:
@@ -53,6 +54,11 @@ npm run generate:daily
 3. Set environment variables in Vercel project settings:
 - `CRON_SECRET`
 - `NEXT_PUBLIC_SITE_URL`
+- `PUBLISH_TARGET=github` (or `auto`)
+- `GITHUB_TOKEN` (required for automated publishing in Vercel)
+- `GITHUB_REPO_OWNER` (default `cobymyers`)
+- `GITHUB_REPO_NAME` (default `deepspeakerco`)
+- `GITHUB_BRANCH` (default `main`)
 - `OPENAI_API_KEY` (optional)
 - `OPENAI_MODEL` (optional)
 4. Deploy.
@@ -64,6 +70,11 @@ Vercel will automatically deploy on every push to the default branch.
 ## Daily Trigger In Production
 Vercel Cron calls:
 - `GET /api/cron/daily`
+
+Production publishing behavior:
+- In Vercel, `PUBLISH_TARGET=auto` resolves to GitHub publishing.
+- The cron function commits each new markdown post directly to the repo in `content/posts/`.
+- GitHub push triggers a new Vercel deployment, which updates homepage/archive ordering.
 
 Security:
 - Route requires a secret via `Authorization: Bearer <CRON_SECRET>`

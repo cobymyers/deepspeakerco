@@ -25,7 +25,11 @@ export async function GET(request: Request) {
     return unauthorized();
   }
 
-  const result = await runDailyPipeline();
-
-  return NextResponse.json({ ok: true, result });
+  try {
+    const result = await runDailyPipeline();
+    return NextResponse.json({ ok: true, result });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown pipeline error";
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+  }
 }

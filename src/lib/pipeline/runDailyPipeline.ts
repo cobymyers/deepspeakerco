@@ -48,7 +48,7 @@ export async function runDailyPipeline(options?: { publishDate?: string; dryRun?
     };
   }
 
-  const published = publishDraft(draft);
+  const published = await publishDraft(draft);
   return {
     status: "published",
     slug: published.slug,

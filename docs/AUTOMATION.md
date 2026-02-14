@@ -57,6 +57,11 @@ If you add legally approved platform/promotional images later, store only metada
 Implemented in `src/lib/pipeline/publish.ts`.
 
 Writes markdown with frontmatter to `content/posts`.
+Publisher modes:
+- `filesystem`: local write in development
+- `github`: GitHub Contents API commit to the repository
+- `auto`: resolves to GitHub on Vercel and filesystem locally
+
 Slug collisions are handled automatically by suffixing `-2`, `-3`, etc.
 
 ## Schedule
