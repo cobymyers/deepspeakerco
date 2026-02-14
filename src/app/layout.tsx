@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, IBM_Plex_Sans } from "next/font/google";
+import { AnalyticsTags } from "@/components/Analytics";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -26,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <AnalyticsTags />
+      </body>
     </html>
   );
 }

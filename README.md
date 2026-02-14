@@ -30,6 +30,7 @@ cp .env.example .env.local
 - `CRON_SECRET` (required)
 - `NEXT_PUBLIC_SITE_URL` (required)
 - `PUBLISH_TARGET=filesystem` (recommended locally)
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` (optional, for Google Analytics 4)
 - `OPENAI_API_KEY` (optional, enables LLM writing)
 - `OPENAI_MODEL` (optional)
 4. Run development server:
@@ -59,6 +60,7 @@ npm run generate:daily
 - `GITHUB_REPO_OWNER` (default `cobymyers`)
 - `GITHUB_REPO_NAME` (default `deepspeakerco`)
 - `GITHUB_BRANCH` (default `main`)
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` (optional, GA4)
 - `OPENAI_API_KEY` (optional)
 - `OPENAI_MODEL` (optional)
 4. Deploy.
@@ -79,6 +81,11 @@ Production publishing behavior:
 Security:
 - Route requires a secret via `Authorization: Bearer <CRON_SECRET>`
 - Query fallback `?secret=<CRON_SECRET>` is also supported
+
+## Analytics
+- Vercel Analytics is installed and runs by default through `@vercel/analytics/react`.
+- Enable viewing data in Vercel: Project -> Analytics.
+- GA4 is also supported. Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` (for example `G-ABC123XYZ9`) in Vercel and redeploy.
 
 ## Content Model
 Posts are markdown files with frontmatter in `content/posts/`.

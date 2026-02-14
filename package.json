@@ -12,6 +12,7 @@
     "generate:daily:dry": "tsx scripts/run-daily.ts --dry-run"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "gray-matter": "^4.0.3",
     "marked": "^15.0.7",
     "next": "^14.2.25",
