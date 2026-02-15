@@ -42,7 +42,7 @@ export default function PostPage({ params }: Params) {
       <Link href="/" className="back-link">
         Back to archive
       </Link>
-      <header className="post-header">
+      <header className="post-header card">
         <div className="post-item-meta">{formatLongDate(post.publishDate)}</div>
         <h1 className="post-title">{post.title}</h1>
       </header>

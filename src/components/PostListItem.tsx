@@ -9,8 +9,8 @@ type PostListItemProps = {
 export function PostListItem({ post }: PostListItemProps) {
   return (
     <li className="post-item">
-      <div className="post-item-meta">{formatLongDate(post.publishDate)}</div>
-      <Link href={`/posts/${post.slug}`}>
+      <Link className="post-item-link" href={`/posts/${post.slug}`}>
+        <div className="post-item-meta">{formatLongDate(post.publishDate)}</div>
         <h4 className="post-item-title">{post.title}</h4>
       </Link>
     </li>

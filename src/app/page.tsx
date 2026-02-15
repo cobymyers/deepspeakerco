@@ -1,50 +1,80 @@
 import Link from "next/link";
 import { getLatestPost, getRecentPosts } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
-import { PostListItem } from "@/components/PostListItem";
+import { HeroNav } from "@/components/HeroNav";
 
 export default function HomePage() {
   const latest = getLatestPost();
-  const recent = getRecentPosts(16);
+  const recent = getRecentPosts(8);
+  const featuredArtists = recent.slice(0, 4);
 
   return (
-    <main className="site-shell">
-      <header className="site-head">
-        <h1 className="wordmark">DeepSpeaker</h1>
-        <p className="deck">
-          A daily editorial on emerging artists with momentum across the US, Canada,
-          and UK. Published automatically each day.
-        </p>
-      </header>
+    <main className="landing">
+      <section className="hero">
+        <div className="hero-overlay" />
+        <HeroNav />
+        <div className="hero-copy">
+          <h1>Deep Speaker</h1>
+          <p>A music blog for everyone</p>
+        </div>
+      </section>
 
-      {latest ? (
-        <section className="home-grid">
-          <article className="featured">
-            <div className="meta">{formatLongDate(latest.publishDate)}</div>
-            <Link href={`/posts/${latest.slug}`}>
-              <h2>{latest.title}</h2>
-            </Link>
-            <p>{latest.excerpt}</p>
-            <Link className="read-link" href={`/posts/${latest.slug}`}>
-              Read today&apos;s dispatch
-            </Link>
-          </article>
+      <section id="artists" className="section artists">
+        <div className="section-head">
+          <h2>New Artists</h2>
+          <Link className="ghost-link" href={latest ? `/posts/${latest.slug}` : "/"}>
+            Latest Dispatch
+          </Link>
+        </div>
+        {featuredArtists.length ? (
+          <div className="artist-grid">
+            {featuredArtists.map((post, index) => (
+              <article key={post.slug} className="artist-card">
+                <Link href={`/posts/${post.slug}`} className="artist-card-link">
+                  <div className={`artist-image image-${(index % 4) + 1}`} />
+                  <h3>{post.artist}</h3>
+                  <p>{formatLongDate(post.publishDate)}</p>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : null}
+      </section>
 
-          <aside className="rail">
-            <h3>Recent Posts</h3>
-            <ul className="post-list">
-              {recent.map((post) => (
-                <PostListItem key={post.slug} post={post} />
-              ))}
-            </ul>
-          </aside>
-        </section>
-      ) : (
-        <p className="deck">
-          No posts have been published yet. Run <code>npm run generate:daily</code> to
-          create the first dispatch.
-        </p>
-      )}
+      <div className="section section-separator" aria-hidden />
+
+      <section className="section latest" id="blogs">
+        <h2 className="blogs-title">Blogs</h2>
+        <div className="latest-card">
+          {latest ? (
+            <>
+              <div className="meta">{formatLongDate(latest.publishDate)}</div>
+              <Link href={`/posts/${latest.slug}`}>
+                <h2>{latest.title}</h2>
+              </Link>
+              <p>{latest.excerpt}</p>
+              <Link className="read-link" href={`/posts/${latest.slug}`}>
+                Read full dispatch
+              </Link>
+            </>
+          ) : (
+            <p>No posts published yet.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="section archive">
+        <h2 className="archive-title">Archive</h2>
+        <ul className="archive-list">
+          {recent.map((post) => (
+            <li key={post.slug}>
+              <Link href={`/posts/${post.slug}`}>
+                {post.title} <span>{formatLongDate(post.publishDate)}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
   );
 }
