@@ -30,10 +30,13 @@ export type DraftPost = {
   body: string;
   sourceSignals: string[];
   image: {
-    kind: "abstract" | "platform";
+    kind: "abstract" | "platform" | "licensed";
     alt: string;
     url?: string;
     palette?: string[];
+    license?: string;
+    attribution?: string;
+    source?: string;
   };
 };
 

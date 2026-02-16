@@ -50,8 +50,11 @@ Both modes enforce:
 ## Image Handling
 Implemented in `src/lib/pipeline/image.ts`.
 
-Default behavior uses abstract metadata palettes to avoid copyright risk.
-If you add legally approved platform/promotional images later, store only metadata/URLs that are allowed for publication.
+Image handling uses a license gate:
+- First, it attempts Wikimedia Commons lookups for artist images.
+- Only images with approved license metadata are accepted (CC0, Public Domain, CC BY, CC BY-SA).
+- Images flagged with restricted terms (e.g., fair use, noncommercial, all rights reserved) are rejected.
+- If no compliant image is found, it falls back to abstract visuals automatically.
 
 ## Publishing
 Implemented in `src/lib/pipeline/publish.ts`.

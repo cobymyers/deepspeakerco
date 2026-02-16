@@ -33,6 +33,7 @@ cp .env.example .env.local
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` (optional, for Google Analytics 4)
 - `OPENAI_API_KEY` (optional, enables LLM writing)
 - `OPENAI_MODEL` (optional)
+- `IMAGE_LICENSE_GATE=true` (optional, default true)
 4. Run development server:
 ```bash
 npm run dev
@@ -63,6 +64,7 @@ npm run generate:daily
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` (optional, GA4)
 - `OPENAI_API_KEY` (optional)
 - `OPENAI_MODEL` (optional)
+- `IMAGE_LICENSE_GATE=true` (optional)
 4. Deploy.
 5. Confirm cron schedule in `vercel.json`:
 - `0 13 * * *` (13:00 UTC daily)
@@ -98,6 +100,12 @@ Frontmatter schema:
 - `artist`
 - `image` (optional metadata)
 - `sourceSignals` (optional list)
+
+## Artist Image License Gate
+- The pipeline attempts to fetch artist imagery only from Wikimedia Commons metadata.
+- Images are accepted only when license metadata passes an allowlist (CC0, Public Domain, CC BY, CC BY-SA) and does not include denylist terms (e.g., fair use, noncommercial).
+- If no image passes the gate, the post falls back to abstract generated visuals automatically.
+- Set `IMAGE_LICENSE_GATE=false` to disable licensed-image lookups and force abstract visuals.
 
 ## Editorial Guardrails
 - Calm, informed tone

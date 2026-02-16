@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { getLatestPost, getRecentPosts } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
 import { HeroNav } from "@/components/HeroNav";
@@ -7,6 +8,15 @@ export default function HomePage() {
   const latest = getLatestPost();
   const recent = getRecentPosts(8);
   const featuredArtists = recent.slice(0, 4);
+  const tileStyle = (imageUrl?: string): CSSProperties | undefined => {
+    if (!imageUrl) {
+      return undefined;
+    }
+
+    return {
+      backgroundImage: `linear-gradient(170deg, rgba(8, 8, 8, 0.22), rgba(8, 8, 8, 0.6)), url(${imageUrl})`
+    };
+  };
 
   return (
     <main className="landing">
@@ -31,7 +41,10 @@ export default function HomePage() {
             {featuredArtists.map((post, index) => (
               <article key={post.slug} className="artist-card">
                 <Link href={`/posts/${post.slug}`} className="artist-card-link">
-                  <div className={`artist-image image-${(index % 4) + 1}`} />
+                    <div
+                      className={`artist-image image-${(index % 4) + 1}`}
+                      style={tileStyle(post.image?.url)}
+                    />
                   <h3>{post.artist}</h3>
                   <p>{formatLongDate(post.publishDate)}</p>
                 </Link>

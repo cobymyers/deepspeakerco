@@ -5,10 +5,13 @@ import matter from "gray-matter";
 export const POSTS_DIRECTORY = path.join(process.cwd(), "content", "posts");
 
 export type ImageMeta = {
-  kind: "abstract" | "platform";
+  kind: "abstract" | "platform" | "licensed";
   alt: string;
   url?: string;
   palette?: string[];
+  license?: string;
+  attribution?: string;
+  source?: string;
 };
 
 export type PostMeta = {

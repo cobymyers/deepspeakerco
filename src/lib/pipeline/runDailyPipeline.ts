@@ -3,7 +3,7 @@ import { getPublishedArtists, hasPostForDate } from "@/lib/content";
 import { collectSignals } from "@/lib/pipeline/sources";
 import { scoreCandidates } from "@/lib/pipeline/scoring";
 import { writeDraft } from "@/lib/pipeline/writer";
-import { buildAbstractImageMeta } from "@/lib/pipeline/image";
+import { buildAbstractImageMeta, selectLicensedArtistImage } from "@/lib/pipeline/image";
 import { publishDraft } from "@/lib/pipeline/publish";
 import type { PipelineResult } from "@/lib/pipeline/types";
 
@@ -37,7 +37,14 @@ export async function runDailyPipeline(options?: { publishDate?: string; dryRun?
   }
 
   const draft = await writeDraft(pick, publishDate);
-  draft.image = buildAbstractImageMeta(pick.artist);
+  const licensedImage = await selectLicensedArtistImage(pick.artist);
+  draft.image = licensedImage ?? buildAbstractImageMeta(pick.artist);
+
+  if (DEBUG) {
+    console.log(
+      `[pipeline] image mode for ${pick.artist}: ${draft.image.kind}${draft.image.license ? ` (${draft.image.license})` : ""}`
+    );
+  }
 
   if (options?.dryRun) {
     return {
