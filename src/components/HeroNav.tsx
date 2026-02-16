@@ -29,23 +29,8 @@ export function HeroNav() {
           <Link className="menu-link active" href="/">
             Home
           </Link>
-          <a className="menu-link" href="#blogs">
-            About
-          </a>
           <a className="menu-link" href="#artists">
             New Artists
-          </a>
-          <a className="menu-link" href="#blogs">
-            Contact
-          </a>
-          <a className="menu-icon" href="https://instagram.com" aria-label="Instagram">
-            IG
-          </a>
-          <a className="menu-icon" href="https://facebook.com" aria-label="Facebook">
-            FB
-          </a>
-          <a className="submit-btn" href="#blogs">
-            Submit
           </a>
         </nav>
       </div>
