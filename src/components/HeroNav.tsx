@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function HeroNav() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => {
@@ -26,12 +28,12 @@ export function HeroNav() {
           <span>DS</span>
         </Link>
         <nav className="menu">
-          <Link className="menu-link active" href="/">
+          <Link className={`menu-link ${pathname === "/" ? "active" : ""}`} href="/">
             Home
           </Link>
-          <a className="menu-link" href="#artists">
-            New Artists
-          </a>
+          <Link className={`menu-link ${pathname === "/archive" ? "active" : ""}`} href="/archive">
+            Archive
+          </Link>
         </nav>
       </div>
     </header>

@@ -1,22 +1,23 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { getLatestPost, getRecentPosts } from "@/lib/content";
+import { getRecentPosts } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
+import { getArtistImageMap } from "@/lib/artistImages";
 import { HeroNav } from "@/components/HeroNav";
 
-export default function HomePage() {
-  const latest = getLatestPost();
-  const recent = getRecentPosts(8);
-  const featuredArtists = recent.slice(0, 4);
-  const tileStyle = (imageUrl?: string): CSSProperties | undefined => {
-    if (!imageUrl) {
-      return undefined;
-    }
+function tileStyle(imageUrl?: string): CSSProperties | undefined {
+  if (!imageUrl) {
+    return undefined;
+  }
 
-    return {
-      backgroundImage: `linear-gradient(170deg, rgba(8, 8, 8, 0.22), rgba(8, 8, 8, 0.6)), url(${imageUrl})`
-    };
+  return {
+    backgroundImage: `linear-gradient(180deg, rgba(8, 16, 26, 0.1), rgba(8, 16, 26, 0.55)), url(${imageUrl})`
   };
+}
+
+export default async function HomePage() {
+  const posts = getRecentPosts(120);
+  const artistImageMap = await getArtistImageMap(posts);
 
   return (
     <main className="landing">
@@ -29,22 +30,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="artists" className="section artists">
+      <section id="posts" className="section artists">
         <div className="section-head">
-          <h2>New Artists</h2>
-          <Link className="ghost-link" href={latest ? `/posts/${latest.slug}` : "/"}>
-            Latest Dispatch
+          <h2>New Posts</h2>
+          <Link className="ghost-link" href="/archive">
+            View Archive
           </Link>
         </div>
-        {featuredArtists.length ? (
+        {posts.length ? (
           <div className="artist-grid">
-            {featuredArtists.map((post, index) => (
-              <article key={post.slug} className="artist-card">
+            {posts.map((post, index) => (
+              <article
+                key={post.slug}
+                className="artist-card"
+                style={{ "--card-index": index } as CSSProperties}
+              >
                 <Link href={`/posts/${post.slug}`} className="artist-card-link">
-                    <div
-                      className={`artist-image image-${(index % 4) + 1}`}
-                      style={tileStyle(post.image?.url)}
-                    />
+                  <div
+                    className={`artist-image image-${(index % 4) + 1}`}
+                    style={tileStyle(artistImageMap.get(post.artist) ?? post.image?.url)}
+                  />
                   <h3>{post.artist}</h3>
                   <p>{formatLongDate(post.publishDate)}</p>
                 </Link>
@@ -52,41 +57,6 @@ export default function HomePage() {
             ))}
           </div>
         ) : null}
-      </section>
-
-      <div className="section section-separator" aria-hidden />
-
-      <section className="section latest" id="blogs">
-        <h2 className="blogs-title">Blogs</h2>
-        <div className="latest-card">
-          {latest ? (
-            <>
-              <div className="meta">{formatLongDate(latest.publishDate)}</div>
-              <Link href={`/posts/${latest.slug}`}>
-                <h2>{latest.title}</h2>
-              </Link>
-              <p>{latest.excerpt}</p>
-              <Link className="read-link" href={`/posts/${latest.slug}`}>
-                Read full dispatch
-              </Link>
-            </>
-          ) : (
-            <p>No posts published yet.</p>
-          )}
-        </div>
-      </section>
-
-      <section className="section archive">
-        <h2 className="archive-title">Archive</h2>
-        <ul className="archive-list">
-          {recent.map((post) => (
-            <li key={post.slug}>
-              <Link href={`/posts/${post.slug}`}>
-                {post.title} <span>{formatLongDate(post.publishDate)}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
     </main>
   );
