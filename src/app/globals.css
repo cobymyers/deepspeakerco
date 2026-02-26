@@ -59,7 +59,8 @@ button:focus-visible {
 
 .hero {
   position: relative;
-  min-height: 640px;
+  min-height: 100vh;
+  min-height: 100svh;
   padding: 24px;
   border-bottom: 1px solid var(--line-soft);
   border-radius: 0 0 40px 40px;
@@ -699,7 +700,8 @@ button:focus-visible {
   }
 
   .hero {
-    min-height: 560px;
+    min-height: 100vh;
+    min-height: 100svh;
     border-radius: 0 0 24px 24px;
     padding: 16px 12px;
   }
