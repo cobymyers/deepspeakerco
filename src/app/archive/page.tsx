@@ -21,7 +21,7 @@ export default async function ArchivePage() {
 
   return (
     <main className="landing archive-layout">
-      <section className="archive-hero section">
+      <section className="archive-hero">
         <HeroNav />
         <div className="archive-hero-copy">
           <h1>Archive</h1>
