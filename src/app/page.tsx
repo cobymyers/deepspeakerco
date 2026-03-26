@@ -20,6 +20,23 @@ export default function HomePage() {
 
   return (
     <main className="landing">
+      <div className="ticker" aria-hidden>
+        <div className="ticker-inner">
+          {[...Array(4)].map((_, i) => (
+            <span key={i} className="ticker-group">
+              <span>Deep Speaker</span>
+              <span className="ticker-sep">·</span>
+              <span>A Music Blog For Everyone</span>
+              <span className="ticker-sep">·</span>
+              <span>New Artists Daily</span>
+              <span className="ticker-sep">·</span>
+              <span>US · Canada · UK</span>
+              <span className="ticker-sep">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       <section className="hero">
         <div className="hero-overlay" />
         <HeroNav />
