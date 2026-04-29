@@ -1,5 +1,5 @@
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 
 export function AnalyticsTags() {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
