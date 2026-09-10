@@ -1,3 +1,4 @@
+import { ArtistPhoto } from "@/components/ArtistPhoto";
 import Link from "next/link";
 import type { PostMeta } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
@@ -10,6 +11,7 @@ export function StoryCard({ post, image }: { post: PostMeta; image?: string }) {
           className="story-art"
           style={image ? { backgroundImage: `url("${image}")` } : undefined}
         >
+          {image && <ArtistPhoto src={image} artist={post.artist} />}
           {!image && (
             <span className="record" aria-hidden="true">
               DS

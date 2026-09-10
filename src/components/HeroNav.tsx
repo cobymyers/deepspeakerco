@@ -1,4 +1,5 @@
 "use client";
+import { MotionControl } from "@/components/MotionControl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 export function HeroNav() {
@@ -9,17 +10,20 @@ export function HeroNav() {
         <Link className="wordmark" href="/" aria-label="Deep Speaker home">
           deep speaker<span aria-hidden="true">●</span>
         </Link>
-        <nav aria-label="Main navigation">
-          <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
-            Discover
-          </Link>
-          <Link
-            href="/archive"
-            aria-current={pathname === "/archive" ? "page" : undefined}
-          >
-            Archive
-          </Link>
-        </nav>
+        <div className="nav-actions">
+          <MotionControl />
+          <nav aria-label="Main navigation">
+            <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
+              Discover
+            </Link>
+            <Link
+              href="/archive"
+              aria-current={pathname === "/archive" ? "page" : undefined}
+            >
+              Archive
+            </Link>
+          </nav>
+        </div>
       </div>
     </header>
   );

@@ -1,3 +1,4 @@
+import { ArtistPhoto } from "@/components/ArtistPhoto";
 import Link from "next/link";
 import { getRecentPosts, getPostBySlug } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
@@ -8,7 +9,9 @@ export default async function HomePage() {
   const posts = getRecentPosts(12);
   const featured = getPostBySlug("olivia-dean-daily-brief") ?? posts[0];
   const more = posts.filter((post) => post.slug !== featured?.slug);
-  const images = await getArtistImageMap(featured ? [featured, ...more] : posts);
+  const images = await getArtistImageMap(
+    featured ? [featured, ...more] : posts,
+  );
   return (
     <>
       <HeroNav />
@@ -28,6 +31,13 @@ export default async function HomePage() {
                   : undefined
               }
             >
+              {images.get(featured.artist) && (
+                <ArtistPhoto
+                  src={images.get(featured.artist)!}
+                  artist={featured.artist}
+                  priority
+                />
+              )}
               {!images.get(featured.artist) && (
                 <span className="record" aria-hidden="true">
                   DS
