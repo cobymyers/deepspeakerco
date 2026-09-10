@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPostBySlug, getRecentPosts } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
+import { HeroNav } from "@/components/HeroNav";
 import { RichText } from "@/components/RichText";
 
 type Params = {
@@ -16,13 +17,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "Post Not Found | DeepSpeaker"
+      title: "Post Not Found | DeepSpeaker",
     };
   }
 
   return {
     title: `${post.title} | DeepSpeaker`,
-    description: post.excerpt
+    description: post.excerpt,
   };
 }
 
@@ -38,15 +39,26 @@ export default function PostPage({ params }: Params) {
   }
 
   return (
-    <main className="post-page">
-      <Link href="/" className="back-link">
-        Back to archive
-      </Link>
-      <header className="post-header card">
-        <div className="post-item-meta">{formatLongDate(post.publishDate)}</div>
-        <h1 className="post-title">{post.title}</h1>
-      </header>
-      <RichText markdown={post.body} />
-    </main>
+    <>
+      <HeroNav />
+      <main id="main" className="post-page">
+        <Link href="/archive" className="back-link">
+          Back to archive
+        </Link>
+        <header className="post-header card">
+          <div className="post-item-meta">
+            {formatLongDate(post.publishDate)}
+          </div>
+          <h1 className="post-title">{post.title}</h1>
+          <p className="post-deck">{post.excerpt}</p>
+        </header>
+        <RichText markdown={post.body} />
+        <div className="post-end">
+          <Link className="text-link" href="/archive">
+            Find your next listen ↗
+          </Link>
+        </div>
+      </main>
+    </>
   );
 }

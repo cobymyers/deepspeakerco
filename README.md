@@ -111,7 +111,11 @@ Frontmatter schema:
 - Calm, informed tone
 - No lyrics
 - No clickbait framing
-- Recommendations include track/project titles only
+- Recommendations include named tracks and listening links grounded in collected signals
+- If model output is missing named tracks or Apple Music links, publish a short chart-based listening brief instead
+- If no named tracks are available, stop the run rather than publishing generic copy
+
+Run the writer regression checks with `npx tsx --test tests/writer.test.ts`.
 
 ## Discovery + Ranking Details
 See `docs/AUTOMATION.md` for the complete signal collection and ranking method.

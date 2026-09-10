@@ -1,57 +1,29 @@
-import Link from "next/link";
-import type { CSSProperties } from "react";
 import { getRecentPosts } from "@/lib/content";
-import { formatLongDate } from "@/lib/date";
 import { getArtistImageMap } from "@/lib/artistImages";
 import { HeroNav } from "@/components/HeroNav";
-
-function tileStyle(imageUrl?: string): CSSProperties | undefined {
-  if (!imageUrl) {
-    return undefined;
-  }
-
-  return {
-    backgroundImage: `linear-gradient(180deg, rgba(8, 16, 26, 0.12), rgba(8, 16, 26, 0.58)), url(${imageUrl})`
-  };
-}
-
+import { StoryCard } from "@/components/StoryCard";
 export default async function ArchivePage() {
   const posts = getRecentPosts(1200);
-  const artistImageMap = await getArtistImageMap(posts);
-
+  const images = await getArtistImageMap(posts);
   return (
-    <main className="landing archive-layout">
-      <section className="archive-hero">
-        <HeroNav />
-        <div className="archive-hero-copy">
-          <h1>Archive</h1>
-          <p>All Deep Speaker posts in one place</p>
-          <Link className="ghost-link" href="/">
-            Back Home
-          </Link>
-        </div>
-      </section>
-
-      <section className="section archive-posts">
-        <div className="artist-grid">
-          {posts.map((post, index) => (
-            <article
+    <>
+      <HeroNav />
+      <main id="main" className="section archive-page">
+        <p className="eyebrow">The collection / {posts.length} stories</p>
+        <h1>Keep digging.</h1>
+        <p className="archive-intro">
+          A good song is always worth coming back to.
+        </p>
+        <div className="story-grid">
+          {posts.map((post) => (
+            <StoryCard
               key={post.slug}
-              className="artist-card"
-              style={{ "--card-index": index } as CSSProperties}
-            >
-              <Link href={`/posts/${post.slug}`} className="artist-card-link">
-                <div
-                  className={`artist-image image-${(index % 4) + 1}`}
-                  style={tileStyle(artistImageMap.get(post.artist) ?? post.image?.url)}
-                />
-                <h3>{post.artist}</h3>
-                <p>{formatLongDate(post.publishDate)}</p>
-              </Link>
-            </article>
+              post={post}
+              image={images.get(post.artist)}
+            />
           ))}
         </div>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }

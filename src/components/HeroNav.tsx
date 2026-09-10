@@ -1,37 +1,22 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
 export function HeroNav() {
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   return (
-    <header className={`hero-nav ${scrolled ? "scrolled" : ""}`}>
-      <div className="hero-nav-inner">
-        <Link className="brand-badge" href="/">
-          <span>DS</span>
+    <header className="site-nav">
+      <div className="nav-inner">
+        <Link className="wordmark" href="/" aria-label="Deep Speaker home">
+          deep speaker<span aria-hidden="true">●</span>
         </Link>
-        <nav className="menu">
-          <Link className={`menu-link ${pathname === "/" ? "active" : ""}`} href="/">
-            Home
+        <nav aria-label="Main navigation">
+          <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
+            Discover
           </Link>
-          <Link className={`menu-link ${pathname === "/archive" ? "active" : ""}`} href="/archive">
+          <Link
+            href="/archive"
+            aria-current={pathname === "/archive" ? "page" : undefined}
+          >
             Archive
           </Link>
         </nav>

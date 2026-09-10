@@ -14,11 +14,17 @@ type ITunesResponse = {
   results?: ITunesResult[];
 };
 
-async function fetchWikipediaArtistImage(artist: string): Promise<string | null> {
+async function fetchWikipediaArtistImage(
+  artist: string,
+): Promise<string | null> {
   const title = artist.trim().replace(/\s+/g, "_");
-  const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`, {
-    next: { revalidate: 60 * 60 * 24 }
-  });
+  const response = await fetch(
+    `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
+    {
+      signal: AbortSignal.timeout(4000),
+      next: { revalidate: 60 * 60 * 24 },
+    },
+  );
 
   if (!response.ok) {
     return null;
@@ -28,10 +34,12 @@ async function fetchWikipediaArtistImage(artist: string): Promise<string | null>
   return summary.thumbnail?.source ?? null;
 }
 
-async function fetchITunesArtistArtwork(artist: string): Promise<string | null> {
+async function fetchITunesArtistArtwork(
+  artist: string,
+): Promise<string | null> {
   const response = await fetch(
     `https://itunes.apple.com/search?term=${encodeURIComponent(artist)}&entity=song&attribute=artistTerm&limit=1`,
-    { next: { revalidate: 60 * 60 * 24 } }
+    { signal: AbortSignal.timeout(4000), next: { revalidate: 60 * 60 * 24 } },
   );
 
   if (!response.ok) {
@@ -65,13 +73,21 @@ async function fetchArtistImage(artist: string): Promise<string | null> {
   }
 }
 
-export async function getArtistImageMap(posts: PostMeta[]): Promise<Map<string, string>> {
+export async function getArtistImageMap(
+  posts: PostMeta[],
+): Promise<Map<string, string>> {
   const map = new Map<string, string>();
   const uniqueArtists = Array.from(new Set(posts.map((post) => post.artist)));
 
   await Promise.all(
     uniqueArtists.map(async (artist) => {
-      const fallback = posts.find((post) => post.artist === artist)?.image?.url;
+      const rawFallback = posts.find((post) => post.artist === artist)?.image
+        ?.url;
+      const fallback =
+        rawFallback && !/\.pdf(?:$|[?#])/i.test(rawFallback)
+          ? rawFallback
+          : undefined;
+      if (artist === "DeepSpeaker Editorial") return;
       const resolved = await fetchArtistImage(artist);
 
       if (resolved) {
@@ -79,7 +95,7 @@ export async function getArtistImageMap(posts: PostMeta[]): Promise<Map<string, 
       } else if (fallback) {
         map.set(artist, fallback);
       }
-    })
+    }),
   );
 
   return map;
