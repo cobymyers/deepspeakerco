@@ -1,5 +1,6 @@
 "use client";
 import { MotionControl } from "@/components/MotionControl";
+import { PelicanMark } from "@/components/PelicanMark";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 export function HeroNav() {
@@ -8,7 +9,7 @@ export function HeroNav() {
     <header className="site-nav">
       <div className="nav-inner">
         <Link className="wordmark" href="/" aria-label="Deep Speaker home">
-          <span className="pelican-mark" aria-hidden="true" />
+          <PelicanMark />
           <span className="brand-name">deep speaker.</span>
         </Link>
         <div className="nav-actions">

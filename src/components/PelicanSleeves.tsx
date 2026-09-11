@@ -20,10 +20,7 @@ export function PelicanSleeves() {
           <br />
           New discoveries.
         </h2>
-        <p>
-          Our original pelican, drawn by Coby. A familiar face for wherever the
-          music takes us next.
-        </p>
+        <p>A familiar face for wherever the music takes us next.</p>
         <div
           className="sleeve-controls"
           role="group"
@@ -61,7 +58,7 @@ export function PelicanSleeves() {
           >
             <Image
               src={`/brand/pelican-${sleeve.file}.webp`}
-              alt={`Coby’s original Deep Speaker pelican and DS artwork, ${sleeve.name} edition`}
+              alt={`Original Deep Speaker pelican and DS artwork, ${sleeve.name} edition`}
               width={750}
               height={750}
               sizes="(max-width: 640px) 260px, 320px"
