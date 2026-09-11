@@ -718,3 +718,183 @@ h2 {
     transform: none;
   }
 }
+
+/* The mascot is a CSS window onto Coby's untouched original artwork. */
+.site-nav .wordmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-nav .wordmark .brand-name {
+  font-size: inherit;
+  margin: 0;
+}
+.site-nav .wordmark .pelican-mark {
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
+  width: 38px;
+  height: 44px;
+  background: #d3a758 url("/brand/pelican-gold.webp") -12px -27px / 108px 108px;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+.site-nav .wordmark:hover .pelican-mark {
+  transform: rotate(-8deg);
+}
+.pelican-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 64px;
+  padding: 64px;
+  margin-bottom: 64px;
+  background: #e9e5da;
+  overflow: hidden;
+}
+.pelican-copy > .eyebrow {
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.pelican-copy h2 {
+  font-size: 48px;
+  margin-bottom: 24px;
+}
+.pelican-copy > p:not(.eyebrow) {
+  max-width: 38ch;
+  color: var(--muted);
+}
+.sleeve-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 16px;
+}
+.sleeve-controls button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: 44px;
+  font: inherit;
+  font-size: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 24px;
+}
+.sleeve-controls button span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.sleeve-controls button[aria-pressed="true"] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.sleeve-controls button:hover {
+  background: #fff;
+}
+.sleeve-controls button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.sleeve-caption {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.sleeve-stack {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  justify-self: center;
+  margin: 24px;
+}
+.pelican-sleeve {
+  position: absolute;
+  inset: 0;
+  transform: translateX(calc(var(--sleeve-position) * 16px))
+    rotate(calc(var(--sleeve-position) * 8deg));
+  z-index: calc(3 - var(--sleeve-position));
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 8px 20px #24251f20;
+}
+.pelican-sleeve.selected {
+  transform: rotate(-5deg);
+}
+.pelican-sleeve img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sleeve-stack:hover .selected {
+  transform: rotate(-2deg) translateY(-8px);
+}
+@media (max-width: 1000px) {
+  .pelican-section {
+    padding: 40px 32px;
+    gap: 32px;
+  }
+  .sleeve-stack {
+    width: 260px;
+    height: 260px;
+  }
+  .pelican-copy h2 {
+    font-size: 38px;
+  }
+}
+@media (max-width: 640px) {
+  .pelican-section {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .sleeve-stack {
+    width: 230px;
+    height: 230px;
+    margin: 16px 24px 32px 0;
+    grid-row: 2;
+  }
+  .pelican-copy h2 {
+    font-size: 36px;
+  }
+  .site-nav .wordmark {
+    gap: 8px;
+  }
+  .site-nav .wordmark .pelican-mark {
+    width: 30px;
+    height: 36px;
+    background-size: 90px 90px;
+    background-position: -10px -23px;
+  }
+}
+@media (max-width: 420px) {
+  .site-nav .wordmark .brand-name {
+    font-size: 0;
+  }
+  .site-nav .wordmark .pelican-mark {
+    width: 38px;
+    height: 44px;
+    background-size: 108px 108px;
+    background-position: -12px -27px;
+  }
+  .sleeve-stack {
+    width: 210px;
+    height: 210px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pelican-sleeve,
+  .site-nav .wordmark .pelican-mark {
+    transition: none;
+  }
+  .sleeve-stack:hover .selected {
+    transform: rotate(-5deg);
+  }
+}
+[data-motion="paused"] .sleeve-stack:hover .selected {
+  transform: rotate(-5deg);
+}

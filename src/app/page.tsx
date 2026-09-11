@@ -1,4 +1,5 @@
 import { ArtistPhoto } from "@/components/ArtistPhoto";
+import { PelicanSleeves } from "@/components/PelicanSleeves";
 import Link from "next/link";
 import { getRecentPosts, getPostBySlug } from "@/lib/content";
 import { formatLongDate } from "@/lib/date";
@@ -92,6 +93,7 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+        <PelicanSleeves />
       </main>
       <footer className="site-footer">
         <span className="wordmark">deep speaker.</span>

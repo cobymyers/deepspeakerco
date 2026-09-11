@@ -8,7 +8,8 @@ export function HeroNav() {
     <header className="site-nav">
       <div className="nav-inner">
         <Link className="wordmark" href="/" aria-label="Deep Speaker home">
-          deep speaker<span aria-hidden="true">●</span>
+          <span className="pelican-mark" aria-hidden="true" />
+          <span className="brand-name">deep speaker.</span>
         </Link>
         <div className="nav-actions">
           <MotionControl />
