@@ -7,3 +7,7 @@ node_modules
 coverage
 
 .claude/worktrees/
+
+# Local only: unpublished drafts and screenshots
+drafts/
+home-after-changes.png
