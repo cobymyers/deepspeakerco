@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "skills": {
+    "design-guide": {
+      "source": "mosif16/codex-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mosif16/codex-skills.git",
+      "skillPath": "skills/design-guide/SKILL.md",
+      "skillFolderHash": "b67f62bc09292c2e2ba71ffb07ce63003609fa26",
+      "installedAt": "2026-02-15T01:33:28.684Z",
+      "updatedAt": "2026-02-15T01:33:28.684Z"
+    }
+  },
+  "dismissed": {}
+}
